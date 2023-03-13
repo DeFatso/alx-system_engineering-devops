@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -lt | head | fmt
+find /tmp -type f | exex ls -lrt {} \;
