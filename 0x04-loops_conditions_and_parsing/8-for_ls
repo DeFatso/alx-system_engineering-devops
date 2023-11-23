@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#displays content of the current directory
+
+for file in *; do
+	if [ -f "$file" ] && [[ "$file" != .* ]]; then
+		after_dash=$(echo "$file" | cut -d '-' -f 2-)
+		echo "$after_dash"
+	fi
+done
