@@ -3,4 +3,3 @@
 
 pid=$(pgrep -f "7-highlander")
 kill "$pid"
-echo "Killed"
