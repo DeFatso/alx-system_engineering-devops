@@ -3,7 +3,6 @@
 
 sigterm() {
 	echo "I am invincible!!!"
-	exit 0
 }
 
 trap sigterm SIGTERM
