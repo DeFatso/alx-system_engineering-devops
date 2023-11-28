@@ -2,8 +2,12 @@
 
 def match_school(input)
   regex = /School/
-  match = input.match(regex)
-  puts match ? match[0] : "$"
+  matches = input.scan(regex)
+  puts matches.empty? ? "$" : matches.join("")
 end
 
-match_school(ARGV[0])
+if ARGV.empty?
+  puts "Please provide an argument."
+else
+  match_school(ARGV[0])
+end
