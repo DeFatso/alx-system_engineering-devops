@@ -20,7 +20,7 @@ ss -tuln | awk '$1 ~ /^(tcp|udp)$/ && $NF == "LISTEN" {print} ' | while read -r 
         pid=$(ss -tuln | awk -v port="$port" '$1 ~ /^(tcp|udp)$/ && $NF == "LISTEN" && $5 == port {print $6}')
         
         if [ -n "$pid" ]; then
-            program=$(ps -p $pid -o comm=)
+            program=$(ps -p "$pid" -o comm=)
 
             echo "$proto        0      0 $local_address        $foreign_address         $state       $pid/$program"
         fi
