@@ -3,9 +3,8 @@
 
 interfaces=$(ip -o link show | awk -F': ' '{print $2}')
 
-# Display IPv4 addresses for each interface
 for interface in $interfaces; do
-    ipv4=$(ip -o -4 addr show dev $interface | awk '{split($4, a, "/"); print a[1]}')
+    ipv4=$(ip -o -4 addr show dev "$interface" | awk '{split($4, a, "/"); print a[1]}')
     if [ -n "$ipv4" ]; then
         echo "$ipv4"
     fi
