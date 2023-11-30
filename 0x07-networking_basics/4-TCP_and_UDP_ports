@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Display IPv4 listening sockets with PID and program name
+
+echo "Active Internet connections (only servers)"
+echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+
+# Filter the output of ss to display only listening sockets
+ss -tuln | awk '$1 ~ /^(tcp|udp)$/ && $NF == "LISTEN" {print} ' | while read -r line; do
+    proto=$(echo "$line" | awk '{print $1}')
+    local_address=$(echo "$line" | awk '{print $5}')
+    foreign_address=$(echo "$line" | awk '{print $6}')
+    state=$(echo "$line" | awk '{print $7}')
+    
+    # Extract IP address and port
+    ip=$(echo "$local_address" | cut -d: -f1)
+    port=$(echo "$local_address" | cut -d: -f2)
+
+    # Check if the IP address is in IPv4 format
+    if [[ "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        pid=$(ss -tuln | awk -v port="$port" '$1 ~ /^(tcp|udp)$/ && $NF == "LISTEN" && $5 == port {print $6}')
+        
+        if [ -n "$pid" ]; then
+            program=$(ps -p $pid -o comm=)
+
+            echo "$proto        0      0 $local_address        $foreign_address         $state       $pid/$program"
+        fi
+    fi
+done
