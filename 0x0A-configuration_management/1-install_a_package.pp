@@ -1,6 +1,6 @@
 # Install Python
-include python
-class { 'python':
+include python3
+class { 'python3':
   version  => 'system',
 }
 
@@ -8,5 +8,5 @@ class { 'python':
 python::pip { 'Flask':
   ensure   => '2.1.0',
   provider => 'pip3',
-  require  => Class['python'],
+  require  => Class['python3'],
 }
