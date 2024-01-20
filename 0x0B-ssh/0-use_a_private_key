@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Use the absolute path to the private key file
-private_key="/root/.ssh/school"
+private_key="~/.ssh/school"
 
 # Set the server address
 server_address="ubuntu@34.239.254.85"
 
 # SSH connection command
-sudo ssh -i "$private_key" "$server_address"
+ssh -i "$private_key" "$server_address"
