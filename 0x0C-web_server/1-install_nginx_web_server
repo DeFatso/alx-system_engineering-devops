@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+sudo apt update
+sudo apt install -y nginx
+
+sudo sh -c 'echo "server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+
+}" > /etc/nginx/sites-available/default'
+
+sudo sh -c 'echo "Hello World!" > /usr/share/nginx/html/index.html'
+
+sudo /etc/init.d/nginx restart
