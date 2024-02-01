@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#script that will display information about subdomains.
+
+print_domain_subdomain() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Error: Both domain and subdomain parameters are required."
+        return
+    fi
+
+    dig_output=$(dig "$1" +short)
+
+    if [ -z "$dig_output" ]; then
+        echo "Error: Domain $1 does not exist or has no DNS records."
+        return
+    fi
+
+    subdomain_output=$(dig "$2.$1" +short)
+
+    if [ -z "$subdomain_output" ]; then
+        echo "Error: Subdomain $2.$1 does not exist or has no DNS records."
+        return
+    fi
+
+    echo "$subdomain_output" | awk -F" " ' NR==1 { print "The subdomain " "'$2'" " is a " $1 " record and points to " $2 }'
+}
+
+if [ "$#" -eq 2 ]; then
+    print_domain_subdomain "$1" "$2"
+else
+    print_domain_subdomain "$1" "www"
+    print_domain_subdomain "$1" "lb-01"
+    print_domain_subdomain "$1" "web-01"
+    print_domain_subdomain "$1" "web-02"
+fi
