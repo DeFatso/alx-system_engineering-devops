@@ -1,0 +1,5 @@
+sudo service docker start
+sudo service docker status
+sudo usermod -aG docker $USER
+ls -l /var/run/docker.sock
+
