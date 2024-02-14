@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Edit nginx configuration to run as nginx user
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+sudo service nginx stop
+
+sudo mkdir -p /var/run/nginx
+sudo chown nginx:nginx /var/run/nginx
+
+sed -i '/user /c\user nginx;' /etc/nginx/nginx.conf
+sed -i '/listen /c\    listen 8080;' /etc/nginx/sites-available/default
+service nginx start
