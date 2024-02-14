@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Edit nginx configuration to run as nginx user
+sed -i '/user /c\user nginx;' /etc/nginx/nginx.conf
+sed -i '/listen /c\    listen 8080;' /etc/nginx/sites-available/default
+pkill apache2
+sudo service nginx restart
