@@ -26,9 +26,10 @@ if __name__ == "__main__":
         """ Create a CSV writer with quoting set to QUOTE_ALL """
         csv_writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
 
-        """ Write the header row to the CSV file """
-        #h_row = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        #csv_writer.writerow(h_row)
+        """
+        h_row = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
+        csv_writer.writerow(h_row)
+        """
 
         """ Iterate over each to-do item and write to the CSV file """
         for todo in todos_data:
