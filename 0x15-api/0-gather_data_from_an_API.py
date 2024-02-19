@@ -1,30 +1,30 @@
 #!/usr/bin/python3
 """
-Returns information about his/her TODO list progress.
+    returns information about his/her TODO list progress.
 """
 
-import json
 import requests
 from sys import argv
 
 if __name__ == "__main__":
-    # Base link
-    link = "https://jsonplaceholder.typicode.com/"
-    employee_id = argv[1]
+    id = argv[1]
+    usr = "https://jsonplaceholder.typicode.com/users/{}".format(id)
+    todos = "https://jsonplaceholder.typicode.com/users/{}/todos".format(id)
 
-    # Fetch user information
-    user = requests.get(link + "users/{}".format(employee_id)).json()
+    user = requests.get(usr).json()
+    todo = requests.get(todos).json()
 
-    # Fetch TODO list for the employee
-    parameters = {"userId": employee_id}
-    todos = requests.get(link + "todos", parameters).json()
+    comp_nb = 0
+    total_nb = 0
+    completed_tasks = []
 
-    # Filter completed tasks and count them
-    task_completed = [t["title"] for t in todos if t.get("completed")]
+    for task in todo:
+        total_nb += 1
+        if task.get("completed") is True:
+            comp_nb += 1
+            completed_tasks.append(task.get("title"))
 
-    # Print employee information and completed tasks
-    print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(task_completed), len(todos)))
-
-    for task_title in task_completed:
-        print("\t" + task_title)
+    e = "Employee {} is done with tasks({}/{}):"
+    print(e.format(user.get("name"), comp_nb, total_nb))
+    for task in completed_tasks:
+        print("\t {}".format(task))
